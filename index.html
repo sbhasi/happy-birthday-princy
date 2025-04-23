@@ -3,192 +3,135 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday Princy!</title>
+  <title>Happy Birthday Princy 💖</title>
   <style>
     body {
       margin: 0;
-      background-color: #ffeef5;
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-      color: #ff3399;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(#ffe4ec, #ffd6f5);
       overflow: hidden;
     }
 
-    h1 {
-      font-size: 2.5em;
-      margin-top: 60px;
-      animation: fadeIn 2s ease-in-out;
-    }
-
-    p {
-      font-size: 1.2em;
-      animation: fadeIn 3s ease-in-out;
-    }
-
-    .card {
-      margin: 20px auto;
-      max-width: 90%;
-      width: 320px;
+    .chat-container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 20px;
+      background: white;
       border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-      animation: zoomIn 2s ease-in-out;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow-y: auto;
+      height: 70vh;
     }
 
-    .card img {
-      width: 100%;
-      height: auto;
-      display: block;
+    .bubble {
+      max-width: 75%;
+      padding: 12px 18px;
+      margin: 10px;
+      border-radius: 25px;
+      font-size: 16px;
+      line-height: 1.4;
+      position: relative;
+      animation: fadeIn 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .left {
+      background: #f1f0f0;
+      align-self: flex-start;
+      border-bottom-left-radius: 0;
+    }
+
+    .right {
+      background: #d1f7c4;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+    }
+
+    .chat-bubble-wrapper {
+      display: flex;
+      flex-direction: column;
     }
 
     @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
     }
 
-    @keyframes zoomIn {
-      0% { transform: scale(0.5); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    #confetti, #hearts {
+    /* Floating hearts */
+    .heart {
       position: fixed;
-      top: 0;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 6s linear infinite;
+    }
+
+    .heart:before, .heart:after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart:before {
+      top: -10px;
       left: 0;
-      z-index: 0;
-      pointer-events: none;
     }
 
-    .typewriter-text {
-      display: inline-block;
-      overflow: hidden;
-      border-right: 2px solid #ff3399;
-      white-space: nowrap;
-      animation: typing 4s steps(40, end), blink 0.75s step-end infinite;
-      font-size: 1.3em;
-      margin-top: 10px;
+    .heart:after {
+      left: -10px;
+      top: 0;
     }
 
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
-
-    audio {
-      margin-top: 20px;
+    @keyframes float {
+      0% { bottom: 0; opacity: 1; transform: translateX(0) rotate(45deg);}
+      100% { bottom: 100%; opacity: 0; transform: translateX(100px) rotate(45deg);}
     }
   </style>
 </head>
 <body>
 
-  <!-- 🎊 Confetti -->
-  <canvas id="confetti"></canvas>
-
-  <!-- ❤️ Floating Hearts -->
-  <canvas id="hearts"></canvas>
-
-  <h1>Happy Birthday My Life Princy 🎂❤️</h1>
-  <div class="typewriter-text">Wishing you love, laughter & happiness always...</div>
-
-
-
-  <div class="card">
-    <img src="birthdaycard.png" alt="Birthday Card for Princy" />
+  <div class="chat-container" id="chat">
+    <div class="chat-bubble-wrapper">
+      <div class="bubble left">Hey Princy! 💕</div>
+      <div class="bubble right">Heyy Sachin 😄</div>
+      <div class="bubble left">Do you know what day it is? 🎂</div>
+      <div class="bubble right">Wait… is it? 👀</div>
+      <div class="bubble left">YES! Happy Birthday to the most amazing wife ever!! 🎉❤️</div>
+      <div class="bubble right">Awww… that’s so sweet!! 🥰</div>
+      <div class="bubble left">I made this just for you… scroll down 💌</div>
+      <div class="bubble right">I’m already smiling 😍</div>
+      <div class="bubble left">You make every moment special. I love you so much! 💖</div>
+      <div class="bubble right">This is the best surprise ever! 💞</div>
+      <div class="bubble left">Wait till you see what comes next… 🥳</div>
+    </div>
   </div>
 
- 
-  <audio id="birthday-audio" src="princysong.mp3" autoplay muted></audio>
-
+  <!-- Floating hearts -->
   <script>
-    // Unmute and play audio on first click
-    document.addEventListener('click', () => {
-      const audio = document.getElementById('birthday-audio');
-      if (audio.paused) {
-        audio.muted = false;
-        audio.play().catch(e => console.log("Audio blocked:", e));
-      }
-    });
-
-    // 🎊 Confetti
-    const confettiCanvas = document.getElementById("confetti");
-    const confettiCtx = confettiCanvas.getContext("2d");
-    confettiCanvas.width = window.innerWidth;
-    confettiCanvas.height = window.innerHeight;
-
-    let confettiPieces = [];
-    function ConfettiPiece() {
-      this.x = Math.random() * confettiCanvas.width;
-      this.y = Math.random() * confettiCanvas.height - confettiCanvas.height;
-      this.radius = Math.random() * 6 + 4;
-      this.color = `hsl(${Math.random() * 360}, 100%, 70%)`;
-      this.speed = Math.random() * 3 + 1;
-      this.tilt = Math.random() * 10 - 10;
+    for (let i = 0; i < 15; i++) {
+      let heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDelay = Math.random() * 5 + 's';
+      document.body.appendChild(heart);
     }
-
-    function drawConfetti() {
-      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-      confettiPieces.forEach(p => {
-        confettiCtx.beginPath();
-        confettiCtx.arc(p.x + p.tilt, p.y, p.radius, 0, Math.PI * 2);
-        confettiCtx.fillStyle = p.color;
-        confettiCtx.fill();
-        p.y += p.speed;
-        p.x += Math.sin(p.y * 0.01);
-        if (p.y > confettiCanvas.height) {
-          p.y = -10;
-          p.x = Math.random() * confettiCanvas.width;
-        }
-      });
-      requestAnimationFrame(drawConfetti);
-    }
-
-    for (let i = 0; i < 150; i++) {
-      confettiPieces.push(new ConfettiPiece());
-    }
-    drawConfetti();
-
-    // ❤️ Floating Hearts
-    const heartsCanvas = document.getElementById("hearts");
-    const heartsCtx = heartsCanvas.getContext("2d");
-    heartsCanvas.width = window.innerWidth;
-    heartsCanvas.height = window.innerHeight;
-
-    const hearts = [];
-
-    function createHeart() {
-      return {
-        x: Math.random() * heartsCanvas.width,
-        y: heartsCanvas.height + 10,
-        size: Math.random() * 20 + 10,
-        speed: Math.random() * 2 + 1,
-        opacity: Math.random() * 0.5 + 0.5
-      };
-    }
-
-    function drawHearts() {
-      heartsCtx.clearRect(0, 0, heartsCanvas.width, heartsCanvas.height);
-      hearts.forEach((heart, i) => {
-        heartsCtx.globalAlpha = heart.opacity;
-        heartsCtx.font = `${heart.size}px Arial`;
-        heartsCtx.fillText("❤️", heart.x, heart.y);
-        heart.y -= heart.speed;
-        if (heart.y < -20) {
-          hearts[i] = createHeart();
-        }
-      });
-      requestAnimationFrame(drawHearts);
-    }
-
-    for (let i = 0; i < 50; i++) {
-      hearts.push(createHeart());
-    }
-
-    drawHearts();
   </script>
+
+  <!-- Auto-play birthday music -->
+  <audio autoplay loop>
+    <source src="princysong.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
 </body>
 </html>
