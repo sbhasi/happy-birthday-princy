@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Happy Birthday Princy!</title>
+  <title>Happy Birthday My Life Princy!</title>
   <style>
     body {
       margin: 0;
@@ -56,14 +56,17 @@
 </head>
 <body>
   <h1>Happy Birthday Princy! 🎉</h1>
+
+  <!-- IMAGE -->
   <img src="birthdaycard.png" alt="Birthday Card">
-  
-  <!-- Autoplay Audio -->
-  <audio autoplay hidden>
+
+  <!-- MUSIC (Autoplay & loop hidden) -->
+  <audio autoplay loop>
     <source src="princysong.mp3" type="audio/mp3">
+    Your browser does not support the audio tag.
   </audio>
 
-  <!-- Confetti (Creates 30 floating pieces) -->
+  <!-- CONFETTI SCRIPT -->
   <script>
     for (let i = 0; i < 30; i++) {
       const confetti = document.createElement('div');
