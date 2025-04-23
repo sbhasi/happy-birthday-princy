@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday Princy!</title>
   <style>
     body {
@@ -51,12 +51,31 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
-    #confetti {
+    #confetti, #hearts {
       position: fixed;
       top: 0;
       left: 0;
       z-index: 0;
       pointer-events: none;
+    }
+
+    .typewriter-text {
+      display: inline-block;
+      overflow: hidden;
+      border-right: 2px solid #ff3399;
+      white-space: nowrap;
+      animation: typing 4s steps(40, end), blink 0.75s step-end infinite;
+      font-size: 1.3em;
+      margin-top: 10px;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
 
     audio {
@@ -65,71 +84,111 @@
   </style>
 </head>
 <body>
+
+  <!-- 🎊 Confetti -->
   <canvas id="confetti"></canvas>
 
+  <!-- ❤️ Floating Hearts -->
+  <canvas id="hearts"></canvas>
+
   <h1>Happy Birthday Princy 🎂❤️</h1>
+  <div class="typewriter-text">Wishing you love, laughter & happiness always...</div>
+
   <p>If you see the image below, the image is working:</p>
 
   <div class="card">
-    <img src="birthdaycard.png" alt="Birthday Card for Princy">
+    <img src="birthdaycard.png" alt="Birthday Card for Princy" />
   </div>
 
   <p>If you hear music, the audio is working:</p>
   <audio id="birthday-audio" src="princysong.mp3" autoplay muted></audio>
 
   <script>
-    // Unmute and play music on first user interaction
+    // Unmute and play audio on first click
     document.addEventListener('click', () => {
       const audio = document.getElementById('birthday-audio');
       if (audio.paused) {
         audio.muted = false;
-        audio.play().catch((e) => {
-          console.log("Audio play blocked:", e);
-        });
+        audio.play().catch(e => console.log("Audio blocked:", e));
       }
     });
 
-    // 🎊 Confetti animation
-    const canvas = document.getElementById("confetti");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    let pieces = [];
+    // 🎊 Confetti
+    const confettiCanvas = document.getElementById("confetti");
+    const confettiCtx = confettiCanvas.getContext("2d");
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
 
+    let confettiPieces = [];
     function ConfettiPiece() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height - canvas.height;
+      this.x = Math.random() * confettiCanvas.width;
+      this.y = Math.random() * confettiCanvas.height - confettiCanvas.height;
       this.radius = Math.random() * 6 + 4;
       this.color = `hsl(${Math.random() * 360}, 100%, 70%)`;
       this.speed = Math.random() * 3 + 1;
       this.tilt = Math.random() * 10 - 10;
     }
 
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      pieces.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x + p.tilt, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.fill();
+    function drawConfetti() {
+      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      confettiPieces.forEach(p => {
+        confettiCtx.beginPath();
+        confettiCtx.arc(p.x + p.tilt, p.y, p.radius, 0, Math.PI * 2);
+        confettiCtx.fillStyle = p.color;
+        confettiCtx.fill();
         p.y += p.speed;
         p.x += Math.sin(p.y * 0.01);
-        if (p.y > canvas.height) {
+        if (p.y > confettiCanvas.height) {
           p.y = -10;
-          p.x = Math.random() * canvas.width;
+          p.x = Math.random() * confettiCanvas.width;
         }
       });
-      requestAnimationFrame(draw);
+      requestAnimationFrame(drawConfetti);
     }
 
-    function initConfetti() {
-      for (let i = 0; i < 150; i++) {
-        pieces.push(new ConfettiPiece());
-      }
-      draw();
+    for (let i = 0; i < 150; i++) {
+      confettiPieces.push(new ConfettiPiece());
+    }
+    drawConfetti();
+
+    // ❤️ Floating Hearts
+    const heartsCanvas = document.getElementById("hearts");
+    const heartsCtx = heartsCanvas.getContext("2d");
+    heartsCanvas.width = window.innerWidth;
+    heartsCanvas.height = window.innerHeight;
+
+    const hearts = [];
+
+    function createHeart() {
+      return {
+        x: Math.random() * heartsCanvas.width,
+        y: heartsCanvas.height + 10,
+        size: Math.random() * 20 + 10,
+        speed: Math.random() * 2 + 1,
+        opacity: Math.random() * 0.5 + 0.5
+      };
     }
 
-    initConfetti();
+    function drawHearts() {
+      heartsCtx.clearRect(0, 0, heartsCanvas.width, heartsCanvas.height);
+      hearts.forEach((heart, i) => {
+        heartsCtx.globalAlpha = heart.opacity;
+        heartsCtx.font = `${heart.size}px Arial`;
+        heartsCtx.fillText("❤️", heart.x, heart.y);
+        heart.y -= heart.speed;
+        if (heart.y < -20) {
+          hearts[i] = createHeart();
+        }
+      });
+      requestAnimationFrame(drawHearts);
+    }
+
+    for (let i = 0; i < 50; i++) {
+      hearts.push(createHeart());
+    }
+
+    drawHearts();
   </script>
+
 </body>
 </html>
