@@ -1,79 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday Princy!</title>
   <style>
     body {
+      margin: 0;
       background-color: #ffeef5;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Arial', sans-serif;
       text-align: center;
-      padding: 40px 10px;
-      overflow-x: hidden;
+      color: #ff3399;
+      overflow: hidden;
     }
 
     h1 {
-      color: #ff69b4;
       font-size: 2.5em;
+      margin-top: 60px;
       animation: fadeIn 2s ease-in-out;
     }
 
     p {
-      color: #ff69b4;
-      margin-top: 10px;
       font-size: 1.2em;
       animation: fadeIn 3s ease-in-out;
     }
 
-    img {
-      width: 90%;
-      max-width: 350px;
-      margin-top: 20px;
+    .card {
+      margin: 20px auto;
+      max-width: 90%;
+      width: 320px;
       border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      animation: zoomIn 2.5s ease-in-out;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      animation: zoomIn 2s ease-in-out;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
 
     @keyframes zoomIn {
-      0% { transform: scale(0.7); opacity: 0; }
+      0% { transform: scale(0.5); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
 
-    canvas {
+    #confetti {
       position: fixed;
       top: 0;
       left: 0;
+      z-index: 0;
       pointer-events: none;
+    }
+
+    audio {
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>Happy Birthday Princy 🎂❤️</h1>
-  <p>Sending you love, joy and music 🎶</p>
-
-  <img src="birthdaycard.png" alt="Birthday Card" />
-
-  <!-- Auto-playing music (muted initially for autoplay policy) -->
-  <audio id="birthday-audio" src="princysong.mp3" autoplay loop></audio>
-
-  <!-- Confetti 🎉 -->
   <canvas id="confetti"></canvas>
 
+  <h1>Happy Birthday Princy 🎂❤️</h1>
+  <p>If you see the image below, the image is working:</p>
+
+  <div class="card">
+    <img src="birthdaycard.png" alt="Birthday Card for Princy">
+  </div>
+
+  <p>If you hear music, the audio is working:</p>
+  <audio id="birthday-audio" src="princysong.mp3" autoplay muted></audio>
+
   <script>
-    // For autoplay on mobile
+    // Unmute and play music on first user interaction
     document.addEventListener('click', () => {
       const audio = document.getElementById('birthday-audio');
-      audio.muted = false;
-      audio.play();
+      if (audio.paused) {
+        audio.muted = false;
+        audio.play().catch((e) => {
+          console.log("Audio play blocked:", e);
+        });
+      }
     });
 
-    // Confetti code
+    // 🎊 Confetti animation
     const canvas = document.getElementById("confetti");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
