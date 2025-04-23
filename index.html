@@ -3,78 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday Princy 💖</title>
+  <title>Happy Birthday Princy</title>
   <style>
     body {
       margin: 0;
+      background: linear-gradient(to right, #ffe4e1, #fff0f5);
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(#ffe4ec, #ffd6f5);
+      text-align: center;
       overflow: hidden;
     }
 
-    .chat-container {
+    .card {
+      margin-top: 40px;
+      animation: zoomIn 2s ease forwards;
+    }
+
+    .card img {
+      width: 90%;
       max-width: 400px;
-      margin: 80px auto;
-      padding: 20px;
-      background: white;
       border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      overflow-y: auto;
-      height: 70vh;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
 
-    .bubble {
-      max-width: 75%;
-      padding: 12px 18px;
-      margin: 10px;
-      border-radius: 25px;
-      font-size: 16px;
-      line-height: 1.4;
-      position: relative;
-      animation: fadeIn 0.6s ease forwards;
-      opacity: 0;
+    @keyframes zoomIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
-    .left {
-      background: #f1f0f0;
-      align-self: flex-start;
-      border-bottom-left-radius: 0;
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid #f06292;
+      white-space: nowrap;
+      margin: 20px auto;
+      letter-spacing: .1em;
+      animation:
+        typing 3.5s steps(40, end),
+        blink-caret .75s step-end infinite;
+      width: 24ch;
+      font-size: 1.2rem;
     }
 
-    .right {
-      background: #d1f7c4;
-      align-self: flex-end;
-      border-bottom-right-radius: 0;
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 24ch }
     }
 
-    .chat-bubble-wrapper {
-      display: flex;
-      flex-direction: column;
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #f06292; }
     }
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
     }
 
-    /* Floating hearts */
     .heart {
-      position: fixed;
+      position: absolute;
       width: 20px;
       height: 20px;
       background: red;
       transform: rotate(45deg);
-      animation: float 6s linear infinite;
+      animation: floatUp 6s linear infinite;
     }
 
-    .heart:before, .heart:after {
-      content: '';
+    .heart::before,
+    .heart::after {
+      content: "";
       position: absolute;
       width: 20px;
       height: 20px;
@@ -82,56 +82,144 @@
       border-radius: 50%;
     }
 
-    .heart:before {
+    .heart::before {
       top: -10px;
       left: 0;
     }
 
-    .heart:after {
-      left: -10px;
+    .heart::after {
       top: 0;
+      left: -10px;
     }
 
-    @keyframes float {
-      0% { bottom: 0; opacity: 1; transform: translateX(0) rotate(45deg);}
-      100% { bottom: 100%; opacity: 0; transform: translateX(100px) rotate(45deg);}
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    canvas {
+      position: fixed;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Chat effect */
+    .chat-bubble {
+      position: fixed;
+      background-color: #fff;
+      padding: 10px 15px;
+      border-radius: 20px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      font-size: 14px;
+      animation: floatChat 10s ease-in-out forwards;
+      white-space: nowrap;
+      z-index: 10;
+    }
+
+    @keyframes floatChat {
+      0% { opacity: 0; transform: translateY(100px); }
+      10% { opacity: 1; }
+      100% { transform: translateY(-120vh); opacity: 0; }
     }
   </style>
 </head>
 <body>
-
-  <div class="chat-container" id="chat">
-    <div class="chat-bubble-wrapper">
-      <div class="bubble left">Hey Princy! 💕</div>
-      <div class="bubble right">Heyy Sachin 😄</div>
-      <div class="bubble left">Do you know what day it is? 🎂</div>
-      <div class="bubble right">Wait… is it? 👀</div>
-      <div class="bubble left">YES! Happy Birthday to the most amazing wife ever!! 🎉❤️</div>
-      <div class="bubble right">Awww… that’s so sweet!! 🥰</div>
-      <div class="bubble left">I made this just for you… scroll down 💌</div>
-      <div class="bubble right">I’m already smiling 😍</div>
-      <div class="bubble left">You make every moment special. I love you so much! 💖</div>
-      <div class="bubble right">This is the best surprise ever! 💞</div>
-      <div class="bubble left">Wait till you see what comes next… 🥳</div>
-    </div>
-  </div>
-
-  <!-- Floating hearts -->
-  <script>
-    for (let i = 0; i < 15; i++) {
-      let heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDelay = Math.random() * 5 + 's';
-      document.body.appendChild(heart);
-    }
-  </script>
-
-  <!-- Auto-play birthday music -->
   <audio autoplay loop>
-    <source src="princysong.mp3" type="audio/mpeg">
+    <source src="birthday_song.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
+  <div class="card">
+    <img src="card.png" alt="Birthday Card for Princy" />
+  </div>
+
+  <div class="typewriter">Happy Birthday, Princy! 💖</div>
+
+  <div class="hearts" id="hearts-container"></div>
+  <canvas id="confetti"></canvas>
+
+  <script>
+    // Hearts
+    const heartContainer = document.getElementById('hearts-container');
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+      heartContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }, 500);
+
+    // Confetti
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createParticle() {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: -10,
+        size: Math.random() * 6 + 4,
+        color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+        velocity: Math.random() * 3 + 2,
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.y += p.velocity;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        if (p.y > canvas.height) particles.splice(i, 1);
+      });
+    }
+
+    function loop() {
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    setInterval(createParticle, 100);
+    window.addEventListener('resize', resize);
+    resize();
+    loop();
+
+    // Chat bubbles
+    const chatMessages = [
+      "🎉 Happy Birthday!",
+      "🥰 You're amazing!",
+      "💐 Many happy returns!",
+      "🎂 Enjoy your day!",
+      "🎁 You are loved!"
+    ];
+
+    function spawnChat() {
+      const msg = document.createElement('div');
+      msg.className = 'chat-bubble';
+      msg.textContent = chatMessages[Math.floor(Math.random() * chatMessages.length)];
+      msg.style.left = Math.random() * 80 + 'vw';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 10000);
+    }
+
+    setInterval(spawnChat, 3000);
+  </script>
 </body>
 </html>
