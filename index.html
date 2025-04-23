@@ -1,33 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday, Princy!</title>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Princy!</title>
   <style>
     body {
-      background: #fff0f5;
-      text-align: center;
-      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 20px;
+      background: #fff8f0;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      color: #ff5e9c;
+      animation: fadeIn 2s ease-in;
     }
-    img {
-      width: 100%;
-      max-width: 400px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
-    }
+
     h1 {
-      color: #d6336c;
+      margin-top: 20px;
+      font-size: 2.5em;
+      animation: slideIn 1.5s ease-out;
+    }
+
+    img {
+      width: 90%;
+      max-width: 400px;
+      margin-top: 20px;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      animation: zoomIn 2s ease-in-out;
+    }
+
+    audio {
+      margin-top: 30px;
+      width: 80%;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes slideIn {
+      from {transform: translateY(-100px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+
+    @keyframes zoomIn {
+      from {transform: scale(0.8);}
+      to {transform: scale(1);}
     }
   </style>
 </head>
 <body>
-  <h1>🎉 Happy Birthday, Princy Sachin! 🎉</h1>
+  <h1>Happy Birthday Princy! 🎂🎉</h1>
   <img src="card.png" alt="Birthday Card">
-  <audio autoplay controls>
-    <source src="song.mp3" type="audio/mpeg">
-    Your browser does not support the audio tag.
+  <audio controls autoplay>
+    <source src="song.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
   </audio>
 </body>
 </html>
