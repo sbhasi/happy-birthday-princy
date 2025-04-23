@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, Princy!</title>
+  <style>
+    body {
+      background: #fff0f5;
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+    h1 {
+      color: #d6336c;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Happy Birthday, Princy Sachin! 🎉</h1>
+  <img src="card.png" alt="Birthday Card">
+  <audio autoplay controls>
+    <source src="song.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+</body>
+</html>
